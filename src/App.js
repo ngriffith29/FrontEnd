@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react'
+import axios from 'axios'
+import Iterator from './components/Iterator'
+export default function App() {
+  const [insta, setinsta] = useState([]);
+  const [twitter, setTwitter] = useState([])
+  useEffect(() => {
+   axios.get('https://instgraphi.herokuapp.com/hashtag_recent_media/dogs')
+   .then(res => {setinsta(res.data) })
+   axios.get('https://hashersildertwitter.herokuapp.com/tweets?numOTweets=1&searchTerm=dogs')
+   .then(res =>  {setTwitter(res)})
+   //
+  },[])
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="high">
+      <h1>Hash Slide</h1>
+      <Iterator insta={insta} twitter={twitter} />
     </div>
-  );
+  )
 }
-
-export default App;
